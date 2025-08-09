@@ -65,7 +65,7 @@ flowchart TB
   FS3 --> DP4
   FS4 --> DP4
   FS5 --> DP4
-
+```
 
 ## Table of Contents
 
@@ -692,4 +692,5 @@ For enterprise deployments and professional support:
 *BrandNexus - Connecting your knowledge to AI-powered workflows*
 
 </readme>
+
 
