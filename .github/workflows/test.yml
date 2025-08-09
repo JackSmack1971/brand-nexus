@@ -22,8 +22,8 @@ jobs:
             requirements.txt
             requirements-dev.txt
       - run: pip install -r requirements-dev.txt
-      - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
+      - name: Install brandnexus package
+        run: pip install -e .
       - run: pytest -n auto --cov=src/brandnexus --cov-report=xml
       - uses: actions/upload-artifact@v4
         with:

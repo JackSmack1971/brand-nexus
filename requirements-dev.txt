@@ -6,3 +6,4 @@ mypy
 pytest
 pytest-cov
 pytest-asyncio
+pytest-xdist
