@@ -34,5 +34,7 @@ jobs:
         run: bandit -r src -q
       - name: Secret scan
         uses: gitleaks/gitleaks-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: pip-audit
         run: pip-audit
