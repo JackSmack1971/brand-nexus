@@ -135,7 +135,7 @@ Get BrandNexus running in under 5 minutes:
 
 ```bash
 # 1. Clone and setup
-git clone https://github.com/yourusername/brandnexus.git
+git clone https://github.com/JackSmack1971/brand-nexus.git
 cd brandnexus
 
 # 2. Run automated deployment
@@ -692,5 +692,6 @@ For enterprise deployments and professional support:
 *BrandNexus - Connecting your knowledge to AI-powered workflows*
 
 </readme>
+
 
 
