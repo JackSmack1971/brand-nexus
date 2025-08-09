@@ -2,7 +2,139 @@
 
 **An intelligent MCP server that seamlessly connects your strategy documents, brand guidelines, and messaging templates to AI-powered workflows through Claude Desktop, Cursor IDE, and VS Code, enabling instant search, classification, and contextual access to organizational knowledge.**
 
-![MCP Server Architecture](https://via.placeholder.com/800x400/f8f9fa/6c757d?text=BrandNexus+Architecture)
+flowchart TB
+  %% ===== LAYERS =====
+  subgraph L0["Client Layer"]
+    CL1["Cursor IDE"]
+    CL2["Claude Desktop"]
+    CL3["VS Code"]
+    CL4["Roo Code (agents)"]
+  end
+
+  subgraph L1["MCP Protocol"]
+    P1["stdio"]
+    P2["SSE (server-sent events)"]
+    P3["HTTP (optional)"]
+  end
+
+  subgraph L2["Domain-Specific MCP Server (FastMCP)"]
+    S1["Tools (@mcp.tool)"]
+    S2["Resources (@mcp.resource)"]
+    S3["Access Control (optional JWT)"]
+  end
+
+  subgraph L3["Document Processing"]
+    DP1["DocumentIndexer"]
+    DP2["Classifier (rules/ML)"]
+    DP3["Metadata Extractor (frontmatter/tags)"]
+    DP4["Content Parser (md/txt/pdf/docx/yaml/json)"]
+  end
+
+  subgraph L4["Storage"]
+    ST1["SQLite DB"]
+    ST2["Full-text Index"]
+    ST3["Metadata Tables"]
+    ST4["(Optional) Embedding/FAISS Index"]
+  end
+
+  subgraph L5["File System (Project)"]
+    FS1["/project/{pid}/strategy/"]
+    FS2["/project/{pid}/brand/"]
+    FS3["/project/{pid}/messaging/"]
+    FS4["/project/{pid}/templates/"]
+    FS5["/project/{pid}/guidelines/"]
+    FS6["/project/{pid}/evidence/ (snapshots)"]
+  end
+
+  %% ===== TOOL/RESOURCE DETAIL =====
+  subgraph TOOLS["Exposed Tools (selected)"]
+    T1["index_documents()"]
+    T2["search_documents(query, type?, cat?, limit?)"]
+    T3["get_brand_guidelines(section?)"]
+    T4["get_messaging_templates(category?)"]
+    T5["get_document_content(path)"]
+    T6["analyze_document_relationships()"]
+  end
+
+  subgraph RES["Resource URIs (examples)"]
+    R1["strategy://document/{id}"]
+    R2["brand://guidelines/{section}"]
+    R3["templates://messaging/{type}"]
+  end
+
+  %% ===== WIRING =====
+  %% Clients -> Protocol
+  CL1 --> P1
+  CL2 --> P1
+  CL3 --> P1
+  CL4 --> P1
+  CL1 -.-> P2
+  CL2 -.-> P2
+  CL3 -.-> P3
+
+  %% Protocol -> Server
+  P1 --> S1
+  P2 --> S1
+  P3 --> S1
+
+  %% Server internals
+  S1 --- TOOLS
+  S2 --- RES
+  S1 --- S3
+
+  %% Tools/Resources -> Processing -> Storage
+  TOOLS --> DP1
+  TOOLS --> DP2
+  TOOLS --> DP3
+  TOOLS --> DP4
+
+  DP1 --> ST1
+  DP1 --> ST2
+  DP2 --> ST3
+  DP3 --> ST3
+  DP4 --> ST2
+  ST4 -. optional .- DP2
+
+  %% Storage <-> Server Responses
+  ST1 --> S1
+  ST2 --> S1
+  ST3 --> S1
+  ST4 -. optional .- S1
+
+  %% File System -> Processing
+  FS1 --> DP4
+  FS2 --> DP4
+  FS3 --> DP4
+  FS4 --> DP4
+  FS5 --> DP4
+  FS6 -. evidence hashes .- ST3
+
+  %% Tools <-> Resources
+  T1 --- DP1
+  T2 --- ST2
+  T3 --- ST1
+  T4 --- ST1
+  T5 --- ST1
+  T6 --- ST3
+
+  R1 --- ST1
+  R2 --- ST1
+  R3 --- ST1
+
+  %% ===== DATA FLOW (high level) =====
+  classDef flow fill:#fff,stroke:#999,stroke-dasharray: 3 3,color:#555;
+  FQ(["1) Query"]):::flow
+  FS(["2) Search/Index"]):::flow
+  FR(["3) Results"]):::flow
+
+  FQ --> P1
+  FS --> ST2
+  FR --> CL4
+
+  %% Notes:
+  %% - stdio is the primary transport; SSE/HTTP optional.
+  %% - Index once, then search frequently; reindex on file changes.
+
 
 ## Table of Contents
 
@@ -627,4 +759,5 @@ For enterprise deployments and professional support:
 **Made with ❤️ by the BrandNexus team**
 
 *BrandNexus - Connecting your knowledge to AI-powered workflows*
+
 </readme>
