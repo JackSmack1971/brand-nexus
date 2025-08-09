@@ -25,4 +25,4 @@ python_version = "3.11"
 strict = false
 
 [tool.pytest.ini_options]
-addopts = "-q --cov=src/brandnexus --cov-report=term-missing"
+addopts = "-q --cov=src/brandnexus --cov-report=term-missing --cov-fail-under=70"

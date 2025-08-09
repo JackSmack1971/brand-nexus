@@ -20,7 +20,8 @@ test\:all:
 	PYTHONPATH=src pytest
 
 cov:
-	pytest --cov=src --cov-report=term-missing
+	PYTHONPATH=src pytest --cov=src/brandnexus --cov-report=term-missing --cov-fail-under=70
+
 
 build:
 	python -m build
