@@ -1,206 +1,269 @@
 # BrandNexus
 
-**An intelligent MCP server that seamlessly connects your strategy documents, brand guidelines, and messaging templates to AI-powered workflows through Claude Desktop, Cursor IDE, and VS Code, enabling instant search, classification, and contextual access to organizational knowledge.**
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
+[![FastMCP](https://img.shields.io/badge/FastMCP-Latest-green.svg)](https://fastmcp.dev)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg)]()
 
-## MCP Server Architecture
+> **An intelligent MCP server that seamlessly connects your strategy documents, brand guidelines, and messaging templates to AI-powered workflows through Claude Desktop, Cursor IDE, and VS Code.**
 
-```mermaid
-flowchart TB
-  subgraph L0["Client Layer"]
-    CL1["Cursor IDE"]
-    CL2["Claude Desktop"]
-    CL3["VS Code"]
-    CL4["Roo Code (agents)"]
-  end
+**BrandNexus** transforms how organizations manage and access strategic content by creating an intelligent bridge between documents and AI assistants, enabling instant search, automatic classification, and contextual access to organizational knowledge.
 
-  subgraph L1["MCP Protocol"]
-    P1["stdio"]
-    P2["SSE (server-sent events)"]
-    P3["HTTP (optional)"]
-  end
+---
 
-  subgraph L2["Domain-Specific MCP Server (FastMCP)"]
-    S1["Tools (@mcp.tool)"]
-    S2["Resources (@mcp.resource)"]
-    S3["Access Control (optional JWT)"]
-  end
-
-  subgraph L3["Document Processing"]
-    DP1["DocumentIndexer"]
-    DP2["Classifier (rules/ML)"]
-    DP3["Metadata Extractor"]
-    DP4["Content Parser (md/txt/pdf/docx/yaml/json)"]
-  end
-
-  subgraph L4["Storage"]
-    ST1["SQLite DB"]
-    ST2["Full-text Index"]
-    ST3["Metadata Tables"]
-    ST4["(Optional) Embedding Index"]
-  end
-
-  subgraph L5["File System (Project)"]
-    FS1["/strategy/"]
-    FS2["/brand/"]
-    FS3["/messaging/"]
-    FS4["/templates/"]
-    FS5["/guidelines/"]
-  end
-
-  CL4 --> P1
-  P1 --> S1
-  S1 --> DP1
-  S1 --> DP2
-  S1 --> DP3
-  S1 --> DP4
-  DP1 --> ST1
-  DP2 --> ST3
-  DP3 --> ST3
-  DP4 --> ST2
-  ST1 --> S1
-  ST2 --> S1
-  ST3 --> S1
-  FS1 --> DP4
-  FS2 --> DP4
-  FS3 --> DP4
-  FS4 --> DP4
-  FS5 --> DP4
-```
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Quick Start](#quick-start)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Client Integration](#client-integration)
-- [API Documentation](#api-documentation)
-- [Advanced Features](#advanced-features)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
-- [Support](#support)
-
-## Overview
-
-BrandNexus is a specialized Model Context Protocol (MCP) server designed to revolutionize how organizations manage and access their strategic content. By creating an intelligent bridge between your documents and AI-powered tools, BrandNexus enables instant search, automatic classification, and contextual access to strategy documents, brand guidelines, and messaging templates.
-
-### What is MCP?
-
-The Model Context Protocol (MCP) is an open standard that enables seamless communication between AI applications and data sources. BrandNexus implements this protocol to make your organizational knowledge instantly accessible to AI assistants like Claude, enhancing their ability to provide contextually relevant and brand-consistent responses.
-
-### Why BrandNexus?
-
-- **🔍 Intelligent Search**: Find documents instantly using natural language queries
-- **🏷️ Smart Classification**: Automatically categorizes documents by type and content
-- **🔗 Seamless Integration**: Works with Claude Desktop, Cursor IDE, and VS Code
-- **📊 Real-time Indexing**: Automatically updates when documents change
-- **🛡️ Enterprise Ready**: Built with security, performance, and scalability in mind
-
-## Features
-
-### Core Functionality
-- **Document Indexing**: Automatically scans and indexes strategy, brand, and messaging documents
-- **Full-Text Search**: Powerful search across all document content with metadata filtering
-- **Smart Classification**: Rule-based and ML-powered document type detection
-- **Resource URIs**: Structured access patterns for different document types
-- **Relationship Analysis**: Discover connections and dependencies between documents
-
-### Supported File Types
-- Markdown (`.md`)
-- Text files (`.txt`)
-- Microsoft Word (`.docx`)
-- PDF documents (`.pdf`)
-- YAML configuration (`.yaml`, `.yml`)
-- JSON data (`.json`)
-
-### AI Client Integration
-- **Claude Desktop**: Native MCP integration for document-aware conversations
-- **Cursor IDE**: Enhanced coding with brand and strategy context
-- **VS Code**: Document access through MCP extensions
-- **Custom Clients**: FastMCP SDK support for building custom integrations
-
-### Advanced Capabilities
-- **Semantic Search**: Vector-based similarity search (optional)
-- **Real-time Monitoring**: File system change detection
-- **ML Classification**: Machine learning-enhanced document categorization
-- **Performance Optimization**: Caching and background processing
-- **Security Features**: Authentication and path validation
-
-## Quick Start
+## 🚀 Quick Start
 
 Get BrandNexus running in under 5 minutes:
 
 ```bash
 # 1. Clone and setup
-git clone https://github.com/JackSmack1971/brand-nexus.git
+git clone https://github.com/yourusername/brandnexus.git
 cd brandnexus
 
 # 2. Run automated deployment
 chmod +x deploy_mcp_server.sh
 ./deploy_mcp_server.sh
 
-# 3. Configure your AI client (see Client Integration section)
-
-# 4. Start using
-# In Claude Desktop: "Index all strategy documents"
-# In Cursor IDE: "Search for brand guidelines about logo usage"
+# 3. Configure your AI client (Claude Desktop example)
+# Edit ~/.config/claude-desktop/claude_desktop_config.json
 ```
 
-## Installation
+**Start using immediately:**
+- "Index all strategy documents"
+- "Search for brand guidelines about logo usage"
+- "Find messaging templates for product launches"
+
+---
+
+## 📋 Table of Contents
+
+- [🏗️ Architecture](#️-architecture)
+- [✨ Features](#-features)
+- [⚡ Installation](#-installation)
+- [⚙️ Configuration](#️-configuration)
+- [🎯 Usage](#-usage)
+- [🔌 Client Integration](#-client-integration)
+- [📚 API Reference](#-api-reference)
+- [🔬 Development](#-development)
+- [🚀 Advanced Features](#-advanced-features)
+- [🛠️ Troubleshooting](#️-troubleshooting)
+- [🤝 Contributing](#-contributing)
+
+---
+
+## 🏗️ Architecture
+
+BrandNexus implements a layered architecture using the Model Context Protocol (MCP) for seamless AI integration:
+
+```mermaid
+flowchart TB
+    subgraph "Client Layer"
+        A1[Cursor IDE]
+        A2[Claude Desktop]
+        A3[VS Code]
+        A4[Custom MCP Clients]
+    end
+    
+    subgraph "MCP Protocol"
+        B1[stdio]
+        B2[SSE Events]
+        B3[HTTP Transport]
+    end
+    
+    subgraph "FastMCP Server"
+        C1[Tools API]
+        C2[Resources API]
+        C3[Document Search]
+        C4[Content Retrieval]
+        C5[Analysis Tools]
+    end
+    
+    subgraph "Document Processing"
+        D1[DocumentIndexer]
+        D2[Classification Engine]
+        D3[Metadata Extractor]
+        D4[Content Parser]
+        D5[Tag Processor]
+    end
+    
+    subgraph "Storage Layer"
+        E1[SQLite Database]
+        E2[Full-text Index]
+        E3[Metadata Tables]
+        E4[Document Cache]
+    end
+    
+    subgraph "File System"
+        F1[/strategy/]
+        F2[/brand/]
+        F3[/messaging/]
+        F4[/templates/]
+        F5[/guidelines/]
+    end
+    
+    A1 & A2 & A3 & A4 --> B1 & B2 & B3
+    B1 & B2 & B3 --> C1 & C2 & C3 & C4 & C5
+    C1 & C2 & C3 & C4 & C5 --> D1 & D2 & D3 & D4 & D5
+    D1 & D2 & D3 & D4 & D5 --> E1 & E2 & E3 & E4
+    F1 & F2 & F3 & F4 & F5 --> D4
+    
+    style A1 fill:#e1f5fe
+    style A2 fill:#e1f5fe
+    style A3 fill:#e1f5fe
+    style A4 fill:#e1f5fe
+    style C1 fill:#e8f5e8
+    style C2 fill:#e8f5e8
+    style E1 fill:#fff3e0
+    style E2 fill:#fff3e0
+```
+
+### Document Processing Workflow
+
+```mermaid
+sequenceDiagram
+    participant Client as AI Client
+    participant MCP as MCP Protocol
+    participant Server as FastMCP Server
+    participant Indexer as Document Indexer
+    participant DB as SQLite Database
+    participant FS as File System
+    
+    Note over Client,FS: Document Indexing Flow
+    Client->>MCP: "Index all documents"
+    MCP->>Server: index_documents()
+    Server->>FS: Scan directories
+    FS-->>Server: File list
+    Server->>Indexer: Process files
+    Indexer->>DB: Store metadata & content
+    DB-->>Indexer: Confirmation
+    Indexer-->>Server: Index results
+    Server-->>MCP: Status report
+    MCP-->>Client: "42 documents indexed"
+    
+    Note over Client,FS: Search Flow
+    Client->>MCP: "Search for brand guidelines"
+    MCP->>Server: search_documents()
+    Server->>DB: Query with filters
+    DB-->>Server: Matching documents
+    Server-->>MCP: Search results
+    MCP-->>Client: Formatted results
+```
+
+---
+
+## ✨ Features
+
+### 🎯 Core Functionality
+- **🔍 Intelligent Search**: Natural language queries across all content
+- **🏷️ Smart Classification**: Auto-categorizes documents by type and content
+- **📊 Real-time Indexing**: Automatically updates when documents change
+- **🔗 AI Integration**: Native support for Claude Desktop, Cursor IDE, VS Code
+- **📁 Multi-format Support**: Markdown, PDF, Word, YAML, JSON, and more
+
+### 🧠 AI-Powered Features
+- **🔍 Semantic Search**: Vector-based similarity matching
+- **🤖 ML Classification**: Machine learning document categorization
+- **📈 Relationship Analysis**: Discover connections between documents
+- **💡 Content Insights**: Automated summaries and tag extraction
+
+### 🛡️ Enterprise Ready
+- **🔐 Security**: JWT authentication and path validation
+- **⚡ Performance**: Caching and background processing
+- **📊 Monitoring**: Health checks and usage analytics
+- **🔧 Configurable**: Flexible setup for any organization
+
+---
+
+## ⚡ Installation
 
 ### Prerequisites
 
-- **Python 3.8+**: Required for running the MCP server
-- **pip**: Python package manager (usually included with Python)
-- **Git**: For cloning the repository (optional)
+- **Python 3.8+** (Required)
+- **Git** (For cloning repository)
+- **500MB RAM** minimum (2GB+ recommended)
 
-### System Requirements
+### Automatic Installation
 
-- **Operating System**: Windows, macOS, or Linux
-- **Memory**: Minimum 512MB RAM (2GB+ recommended for large document sets)
-- **Storage**: 100MB for installation + space for your documents and index
-- **Network**: Internet connection for initial dependency installation
+```bash
+# Clone repository
+git clone https://github.com/yourusername/brandnexus.git
+cd brandnexus
 
-### Manual Installation
+# Run automated deployment
+chmod +x deploy_mcp_server.sh
+./deploy_mcp_server.sh
+```
 
-1. **Download BrandNexus**:
-   ```bash
-   git clone https://github.com/yourusername/brandnexus.git
-   cd brandnexus
-   ```
+<details>
+<summary>🔧 Manual Installation Steps</summary>
 
-2. **Install Python Dependencies**:
-   ```bash
-   pip install fastmcp sqlite3 pathlib pyyaml
-   
-   # Optional: For enhanced document processing
-   pip install python-docx PyPDF2 markdown
-   
-   # Optional: For advanced features
-   pip install scikit-learn sentence-transformers faiss-cpu
-   ```
+```bash
+# 1. Install Python dependencies
+pip install fastmcp sqlite3 pathlib pyyaml
 
-3. **Create Directory Structure**:
-   ```bash
-   mkdir -p strategy brand messaging templates guidelines
-   ```
+# Optional: Enhanced document processing
+pip install python-docx PyPDF2 markdown
 
-4. **Initialize Configuration**:
-   ```bash
-   cp .env.example .env
-   # Edit .env with your specific paths and settings
-   ```
+# Optional: Advanced features
+pip install scikit-learn sentence-transformers faiss-cpu
 
-## Configuration
+# 2. Create directory structure
+mkdir -p strategy brand messaging templates guidelines
 
-### Environment Variables
+# 3. Initialize configuration
+cp .env.example .env
+# Edit .env with your specific paths
+
+# 4. Initialize database
+python domain_specific_mcp_server.py --init-db
+```
+
+</details>
+
+### Verification
+
+```bash
+# Test server functionality
+python domain_specific_mcp_server.py --health-check
+
+# Expected output:
+# ✅ Database connection: OK
+# ✅ Document paths accessible: OK
+# ✅ Server ready for MCP clients
+```
+
+---
+
+## ⚙️ Configuration
+
+### Directory Structure Setup
+
+Organize your documents following this structure:
+
+```
+your-project/
+├── strategy/                    # 📈 Strategic documents
+│   ├── company-strategy-2025.md
+│   ├── product-roadmap.md
+│   └── market-analysis.pdf
+├── brand/                       # 🎨 Brand guidelines  
+│   ├── brand-guidelines.md
+│   ├── logo-usage.md
+│   ├── color-palette.yaml
+│   └── typography-guide.pdf
+├── messaging/                   # 💬 Templates and copy
+│   ├── email-templates/
+│   ├── social-media-templates/
+│   └── press-release-formats/
+├── templates/                   # 📋 Additional templates
+└── guidelines/                  # 📚 Other guidelines
+```
+
+### Environment Configuration
 
 Create a `.env` file in your project root:
 
-```env
+```bash
 # Document paths (comma-separated)
 DOCUMENT_PATHS=./strategy/,./brand/,./messaging/,./templates/,./guidelines/
 
@@ -218,32 +281,8 @@ ENABLE_SEMANTIC_SEARCH=false
 ENABLE_ML_CLASSIFICATION=false
 ```
 
-### Directory Structure
-
-Organize your documents in the following structure:
-
-```
-your-project/
-├── strategy/                    # Strategic documents
-│   ├── company-strategy-2025.md
-│   ├── product-roadmap.md
-│   └── market-analysis.pdf
-├── brand/                       # Brand guidelines
-│   ├── brand-guidelines.md
-│   ├── logo-usage.md
-│   ├── color-palette.yaml
-│   └── typography-guide.pdf
-├── messaging/                   # Templates and copy
-│   ├── email-templates/
-│   ├── social-media-templates/
-│   └── press-release-formats/
-├── templates/                   # Additional templates
-└── guidelines/                  # Other guidelines
-```
-
-### Advanced Configuration
-
-For advanced setups, create a `config.yaml` file:
+<details>
+<summary>📄 Advanced Configuration (config.yaml)</summary>
 
 ```yaml
 server:
@@ -266,66 +305,84 @@ classification:
       path_patterns: ["/strategy/", "strategy"]
       keywords: ["roadmap", "objectives", "goals"]
     brand:
-      path_patterns: ["/brand/", "brand"]
+      path_patterns: ["/brand/", "brand"]  
       keywords: ["guidelines", "identity", "voice"]
 ```
 
-## Usage
+</details>
+
+---
+
+## 🎯 Usage
 
 ### Starting the Server
 
-Run BrandNexus as an MCP server:
-
 ```bash
+# Start as MCP server (stdio mode)
 python domain_specific_mcp_server.py
-```
 
-The server will start in stdio mode, ready to accept MCP protocol connections from AI clients.
+# Or with custom configuration
+python domain_specific_mcp_server.py --config config.yaml
+```
 
 ### Basic Operations
 
-Once connected through an AI client, you can use natural language commands:
+Once connected through an AI client, use natural language:
 
-#### Document Indexing
-- "Index all documents"
-- "Refresh the document index"
-- "Show indexing status"
+#### 📂 Document Management
+```
+"Index all documents"
+"Refresh the document index" 
+"Show indexing status"
+```
 
-#### Searching Documents
-- "Find strategy documents about customer acquisition"
-- "Search for brand guidelines on logo usage"
-- "Show me messaging templates for product launches"
-- "Find all documents mentioning 'sustainability'"
+#### 🔍 Searching Content
+```
+"Find strategy documents about customer acquisition"
+"Search for brand guidelines on logo usage"
+"Show me messaging templates for product launches"
+"Find all documents mentioning 'sustainability'"
+```
 
-#### Document Access
-- "Get the content of our brand voice guide"
-- "Show me the latest strategy document"
-- "Display all email templates"
+#### 📄 Content Access
+```
+"Get the content of our brand voice guide"
+"Show me the latest strategy document"
+"Display all email templates"
+```
 
-#### Analysis and Insights
-- "Analyze relationships between documents"
-- "Show document type distribution"
-- "What are the most common tags across all documents?"
+#### 📊 Analysis & Insights
+```
+"Analyze relationships between documents"
+"Show document type distribution"
+"What are the most common tags?"
+```
 
-### Working with Document Types
+### Document Types
 
-BrandNexus automatically classifies documents into these types:
+BrandNexus automatically classifies documents:
 
-- **Strategy**: Company strategies, roadmaps, objectives
-- **Brand Guidelines**: Visual identity, logo usage, brand voice
-- **Messaging Templates**: Email templates, social copy, campaigns
-- **Positioning**: Market positioning, competitive analysis
-- **Campaign Briefs**: Campaign strategies and briefs
-- **Brand Voice**: Tone and voice guidelines
+| Type | Description | Examples |
+|------|-------------|----------|
+| **Strategy** | Company strategies, roadmaps | `company-strategy-2025.md` |
+| **Brand Guidelines** | Visual identity, brand voice | `logo-usage.md`, `brand-voice.md` |
+| **Messaging Templates** | Email, social, campaign copy | `email-templates/`, `social-copy/` |
+| **Positioning** | Market positioning docs | `competitive-analysis.md` |
+| **Campaign Briefs** | Campaign strategies | `campaign-brief-q4.md` |
 
-## Client Integration
+---
+
+## 🔌 Client Integration
 
 ### Claude Desktop
 
-1. **Install Claude Desktop** from Anthropic's website
+<details>
+<summary>🖥️ Setup Instructions</summary>
+
+1. **Install Claude Desktop** from [Anthropic's website](https://claude.ai/desktop)
 
 2. **Configure MCP Server**:
-   Create or edit `~/.config/claude-desktop/claude_desktop_config.json`:
+   Edit `~/.config/claude-desktop/claude_desktop_config.json`:
    ```json
    {
      "mcpServers": {
@@ -342,9 +399,14 @@ BrandNexus automatically classifies documents into these types:
 
 3. **Restart Claude Desktop** and start using document-aware conversations!
 
+</details>
+
 ### Cursor IDE
 
-1. **Install Cursor IDE** from cursor.sh
+<details>
+<summary>💻 Setup Instructions</summary>
+
+1. **Install Cursor IDE** from [cursor.sh](https://cursor.sh)
 
 2. **Configure MCP Integration**:
    Create `.cursor/mcp.json` in your workspace:
@@ -364,7 +426,12 @@ BrandNexus automatically classifies documents into these types:
 
 3. **Use in Cursor**: Access documents while coding with AI assistance
 
+</details>
+
 ### VS Code
+
+<details>
+<summary>🔧 Setup Instructions</summary>
 
 1. **Install MCP Extension** (when available)
 
@@ -374,7 +441,7 @@ BrandNexus automatically classifies documents into these types:
    {
      "servers": {
        "brandnexus": {
-         "type": "stdio",
+         "type": "stdio", 
          "command": "python",
          "args": ["./domain_specific_mcp_server.py"]
        }
@@ -382,11 +449,13 @@ BrandNexus automatically classifies documents into these types:
    }
    ```
 
-## API Documentation
+</details>
+
+---
+
+## 📚 API Reference
 
 ### MCP Tools
-
-BrandNexus provides these tools through the MCP protocol:
 
 #### `index_documents()`
 Scans and indexes all documents in configured directories.
@@ -411,16 +480,25 @@ Searches documents by content, title, or metadata.
 **Parameters:**
 - `query` (string): Search terms
 - `document_type` (optional): Filter by document type
-- `category` (optional): Filter by category
+- `category` (optional): Filter by category  
 - `limit` (optional): Maximum results (default: 10)
 
-**Example:**
+**Example Usage:**
 ```python
+# Search for brand voice guidelines
 search_documents("brand voice", document_type="brand_guideline", limit=5)
+
+# Find all strategy documents mentioning "growth"
+search_documents("growth", document_type="strategy")
 ```
 
 #### `get_document_content(path)`
 Retrieves the full content of a specific document.
+
+**Example:**
+```python
+get_document_content("/brand/brand-voice.md")
+```
 
 #### `get_messaging_templates(category?)`
 Returns available messaging templates, optionally filtered by category.
@@ -435,28 +513,109 @@ Analyzes relationships and dependencies between documents.
 
 Access documents through structured URI patterns:
 
-- `strategy://document/{doc_id}` - Strategy document access
-- `brand://guidelines/{section}` - Brand guideline sections  
-- `templates://messaging/{template_type}` - Messaging templates
+| Pattern | Description | Example |
+|---------|-------------|---------|
+| `strategy://document/{doc_id}` | Strategy document access | `strategy://document/123` |
+| `brand://guidelines/{section}` | Brand guideline sections | `brand://guidelines/logo` |
+| `templates://messaging/{type}` | Messaging templates | `templates://messaging/email` |
 
-### Direct API Usage
+---
 
-For programmatic access:
+## 🔬 Development
 
-```python
-from domain_specific_mcp_server import mcp
+### Development Environment Setup
 
-# Search documents
-results = mcp.search_documents("brand voice", document_type="brand_guideline")
+```bash
+# Clone repository
+git clone https://github.com/yourusername/brandnexus.git
+cd brandnexus
 
-# Get specific content
-content = mcp.get_document_content("/brand/brand-voice.md")
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Get templates
-templates = mcp.get_messaging_templates(category="email")
+# Install development dependencies
+pip install -r requirements-dev.txt
+
+# Run tests
+python -m pytest tests/
+
+# Run linting
+flake8 domain_specific_mcp_server.py
+black domain_specific_mcp_server.py
 ```
 
-## Advanced Features
+### Project Structure
+
+```mermaid
+classDiagram
+    class DocumentIndexer {
+        +List~str~ base_paths
+        +str db_path
+        +init_database()
+        +index_single_file(path)
+        +search_content(query)
+    }
+    
+    class DocumentMetadata {
+        +str path
+        +str title
+        +str document_type
+        +str category
+        +datetime last_modified
+        +List~str~ tags
+    }
+    
+    class DocumentType {
+        <<enumeration>>
+        STRATEGY
+        BRAND_GUIDELINE
+        MESSAGING_TEMPLATE
+        POSITIONING
+        CAMPAIGN_BRIEF
+        BRAND_VOICE
+    }
+    
+    class FastMCP {
+        +str name
+        +str instructions
+        +run(transport)
+    }
+    
+    DocumentIndexer --> DocumentMetadata
+    DocumentIndexer --> DocumentType
+    FastMCP --> DocumentIndexer
+    
+    note for DocumentIndexer "Core indexing engine\nwith SQLite backend"
+    note for DocumentType "Automatically classified\nbased on path and content"
+```
+
+### Code Style
+
+- Follow PEP 8 for Python code
+- Use type hints for all public functions
+- Add docstrings for all public methods
+- Maximum line length: 88 characters
+- Use `black` for code formatting
+
+### Testing
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=domain_specific_mcp_server
+
+# Run specific test category
+pytest tests/test_indexing.py
+pytest tests/test_search.py
+pytest tests/test_mcp_tools.py
+```
+
+---
+
+## 🚀 Advanced Features
 
 ### Machine Learning Classification
 
@@ -466,10 +625,10 @@ Enable ML-powered document classification:
 # Install ML dependencies
 pip install scikit-learn
 
-# Set environment variable
+# Enable in configuration
 export ENABLE_ML_CLASSIFICATION=true
 
-# Train classifier (requires at least 10 classified documents)
+# Train classifier (requires ≥10 classified documents)
 python -c "
 from domain_specific_mcp_server import mcp
 result = mcp.train_document_classifier()
@@ -482,11 +641,21 @@ print(result)
 Enable vector-based semantic search:
 
 ```bash
-# Install semantic search dependencies
+# Install semantic search dependencies  
 pip install sentence-transformers faiss-cpu
 
 # Enable in configuration
 export ENABLE_SEMANTIC_SEARCH=true
+```
+
+**Usage Example:**
+```python
+# Hybrid search combining keywords and semantics
+semantic_document_search(
+    "company vision and strategic direction",
+    semantic_weight=0.7,
+    limit=10
+)
 ```
 
 ### Real-time Monitoring
@@ -506,43 +675,43 @@ export AUTO_REINDEX=true
 For large document sets:
 
 ```bash
-# Enable caching
-export CACHE_TTL=600  # 10 minutes
+# Enable caching (10 minute TTL)
+export CACHE_TTL=600
 
-# Increase search limits
+# Increase search limits  
 export MAX_SEARCH_RESULTS=50
 
 # Use background processing
 export BACKGROUND_INDEXING=true
 ```
 
-## Troubleshooting
+---
+
+## 🛠️ Troubleshooting
 
 ### Common Issues
 
-#### "Permission denied" errors
+#### ❌ Permission Denied Errors
 ```bash
 # Ensure read access to document directories
 chmod -R 755 ./strategy/ ./brand/ ./messaging/
 ```
 
-#### "Database is locked" errors
+#### ❌ Database Locked Errors  
 ```bash
-# Close any other connections to the database
-# Restart the MCP server
-python domain_specific_mcp_server.py
+# Close other connections and restart
+python domain_specific_mcp_server.py --reset-db
 ```
 
-#### "Module not found" errors
+#### ❌ Module Not Found Errors
 ```bash
 # Reinstall dependencies
 pip install --upgrade fastmcp sqlite3 pathlib pyyaml
 ```
 
-#### Large files not processing
+#### ❌ Large Files Not Processing
 ```bash
-# Check file size limits and encoding
-# For files >10MB, enable streaming processing
+# Enable streaming for files >10MB
 export ENABLE_STREAMING=true
 ```
 
@@ -568,130 +737,109 @@ print(health)
 
 ### Getting Help
 
-1. **Check the logs**: Look in `mcp_server.log` for error details
-2. **Verify configuration**: Ensure paths and permissions are correct
-3. **Test with sample documents**: Use the provided sample files
-4. **Check client configuration**: Verify MCP client setup
+1. **📋 Check logs**: Look in `mcp_server.log` for error details
+2. **⚙️ Verify config**: Ensure paths and permissions are correct  
+3. **🧪 Test samples**: Use provided sample documents
+4. **🔧 Check client**: Verify MCP client configuration
 
-## Contributing
+### Performance Issues
 
-We welcome contributions to BrandNexus! Here's how to get started:
+<details>
+<summary>🚀 Optimization Tips</summary>
 
-### Development Setup
+- **Large Document Sets**: Enable background indexing
+- **Slow Searches**: Implement result caching
+- **Memory Usage**: Use streaming for large files
+- **Database Performance**: Regular VACUUM operations
+
+</details>
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how to get started:
+
+### 🎯 Ways to Contribute
+
+- 🐛 **Bug Reports**: Found an issue? [Open an issue](https://github.com/yourusername/brandnexus/issues)
+- 💡 **Feature Requests**: Have an idea? [Start a discussion](https://github.com/yourusername/brandnexus/discussions)
+- 📝 **Documentation**: Improve guides and examples
+- 🧪 **Testing**: Expand test coverage
+- 🔧 **Code**: Implement new features or fix bugs
+
+### Development Workflow
 
 1. **Fork the repository** on GitHub
+2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+3. **Make your changes** and add tests
+4. **Run the test suite**: `pytest`
+5. **Commit your changes**: `git commit -m "Add amazing feature"`
+6. **Push to your fork**: `git push origin feature/amazing-feature`
+7. **Open a Pull Request**
 
-2. **Clone your fork**:
-   ```bash
-   git clone https://github.com/yourusername/brandnexus.git
-   cd brandnexus
-   ```
+### 🎯 Priority Areas
 
-3. **Create a virtual environment**:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+- [ ] **New document types**: Support for additional file formats
+- [ ] **Enhanced classification**: Improve ML classification algorithms  
+- [ ] **Performance optimizations**: Optimize indexing and search
+- [ ] **Security features**: Add authentication and authorization
+- [ ] **UI components**: Web interface for document management
 
-4. **Install development dependencies**:
-   ```bash
-   pip install -r requirements-dev.txt
-   ```
+### Code Review Process
 
-5. **Run tests**:
-   ```bash
-   python -m pytest tests/
-   ```
+- All changes require review from maintainers
+- Automated tests must pass
+- Documentation updates for new features
+- Follow existing code style and conventions
 
-### Code Style
+---
 
-- Follow PEP 8 for Python code
-- Use type hints where appropriate
-- Add docstrings for all public functions
-- Include unit tests for new features
-
-### Pull Request Process
-
-1. Create a feature branch: `git checkout -b feature/amazing-feature`
-2. Make your changes and add tests
-3. Run the test suite: `pytest`
-4. Commit your changes: `git commit -m "Add amazing feature"`
-5. Push to your fork: `git push origin feature/amazing-feature`
-6. Open a Pull Request
-
-### Areas for Contribution
-
-- **New document types**: Add support for additional file formats
-- **Enhanced classification**: Improve ML classification algorithms
-- **Performance optimizations**: Optimize indexing and search performance
-- **Security features**: Add authentication and authorization
-- **Documentation**: Improve guides and examples
-- **Testing**: Expand test coverage
-
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### MIT License Summary
-
-- ✅ Commercial use
-- ✅ Modification
-- ✅ Distribution
-- ✅ Private use
-- ❌ Liability
-- ❌ Warranty
-
-## Support
-
-### Community Support
-
-- **GitHub Issues**: [Report bugs and request features](https://github.com/yourusername/brandnexus/issues)
-- **Discussions**: [Join community discussions](https://github.com/yourusername/brandnexus/discussions)
-- **Documentation**: [Comprehensive guides](docs/)
-
-### Professional Support
-
-For enterprise deployments and professional support:
-
-- **Email**: support@brandnexus.dev
-- **Enterprise**: enterprise@brandnexus.dev
-- **Consulting**: consulting@brandnexus.dev
-
-### Resources
-
-- **FastMCP Documentation**: [FastMCP Docs](https://fastmcp.dev)
-- **MCP Protocol**: [Model Context Protocol](https://modelcontextprotocol.io)
-- **Anthropic Claude**: [Claude AI](https://claude.ai)
+**MIT License Summary:**
+- ✅ Commercial use, modification, distribution, private use
+- ❌ Liability, warranty
 
 ---
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-- **Anthropic** for the Model Context Protocol specification
-- **FastMCP** for the excellent MCP server framework
+- **[Anthropic](https://anthropic.com)** for the Model Context Protocol specification
+- **[FastMCP](https://fastmcp.dev)** for the excellent MCP server framework  
 - **Contributors** who help make BrandNexus better
-
-## Roadmap
-
-### Version 2.0 (Planned)
-- **Multi-language support**: International document processing
-- **Advanced analytics**: Content performance insights
-- **Collaboration features**: Team workflows and permissions
-- **Cloud deployment**: Hosted service options
-
-### Version 2.1 (Future)
-- **AI-powered summarization**: Automatic document summaries
-- **Version control integration**: Git-based document tracking
-- **Advanced visualizations**: Interactive document maps
-- **API marketplace**: Third-party integrations
+- **Community** for feedback and feature requests
 
 ---
+
+## 🗺️ Roadmap
+
+### 🎯 Version 2.0 (Q2 2024)
+- [ ] **Multi-language support**: International document processing
+- [ ] **Advanced analytics**: Content performance insights
+- [ ] **Collaboration features**: Team workflows and permissions
+- [ ] **Cloud deployment**: Hosted service options
+
+### 🚀 Version 2.1 (Q3 2024)  
+- [ ] **AI-powered summarization**: Automatic document summaries
+- [ ] **Version control integration**: Git-based document tracking
+- [ ] **Advanced visualizations**: Interactive document maps
+- [ ] **API marketplace**: Third-party integrations
+
+---
+
+<div align="center">
 
 **Made with ❤️ by the BrandNexus team**
 
+[🌐 Website](https://brandnexus.dev) • [📖 Documentation](https://docs.brandnexus.dev) • [💬 Community](https://discord.gg/brandnexus) • [🐦 Twitter](https://twitter.com/brandnexus)
+
 *BrandNexus - Connecting your knowledge to AI-powered workflows*
 
-</readme>
+</div>
 
+---
 
-
+*Last updated: August 8, 2025 | Generated from codebase analysis*
