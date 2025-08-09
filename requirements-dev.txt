@@ -1,0 +1,8 @@
+# generated from pyproject.toml optional-dependencies.dev
+-r requirements.txt
+ruff
+black
+mypy
+pytest
+pytest-cov
+pytest-asyncio
