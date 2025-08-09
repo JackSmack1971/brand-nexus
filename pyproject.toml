@@ -8,7 +8,7 @@ requires-python = ">=3.11"
 dependencies = ["pydantic>=2.0", "pydantic-settings>=2.0"]
 
 [project.optional-dependencies]
-dev = ["ruff", "black", "mypy", "pytest", "pytest-cov", "pytest-asyncio"]
+dev = ["ruff", "black", "mypy", "pytest", "pytest-cov", "pytest-asyncio", "pytest-xdist"]
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
