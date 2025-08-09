@@ -32,9 +32,9 @@ jobs:
       - run: pip install bandit
       - name: Bandit
         run: bandit -r src -q
-      - name: Secret scan
-        uses: gitleaks/gitleaks-action@v2
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2.3.4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: pip-audit
         run: pip-audit
