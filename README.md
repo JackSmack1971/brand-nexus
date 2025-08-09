@@ -17,8 +17,8 @@ Get BrandNexus running in under 5 minutes:
 
 ```bash
 # 1. Clone and setup
-git clone https://github.com/yourusername/brandnexus.git
-cd brandnexus
+git clone [https://github.com/JackSmack1971/brand-nexus.git]
+cd brand-nexus
 
 # 2. Run automated deployment
 chmod +x deploy_mcp_server.sh
@@ -843,3 +843,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 *Last updated: August 8, 2025 | Generated from codebase analysis*
+
