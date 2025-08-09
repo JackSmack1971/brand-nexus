@@ -1,4 +1,4 @@
-.PHONY: setup lint fmt typecheck test\:unit test\:all cov build
+.PHONY: setup lint fmt typecheck test\:unit test\:all cov build run
 
 setup:
 	pip install -r requirements-dev.txt
@@ -22,6 +22,10 @@ test\:all:
 cov:
 	PYTHONPATH=src pytest --cov=src/brandnexus --cov-report=term-missing --cov-fail-under=70
 
-
 build:
 	python -m build
+
+run:
+	APP_ENV=development \
+	DB_URL=sqlite+aiosqlite:///./dev.db \
+	PYTHONPATH=src python -m brandnexus.main
